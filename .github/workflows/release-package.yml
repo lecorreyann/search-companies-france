@@ -13,7 +13,11 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
+      - run: printenv
       - run: npm test
+        env:
+          INSEE_API_CONSUMER_KEY: ${{secrets.INSEE_API_CONSUMER_KEY}}
+          INSEE_API_CONSUMER_SECRET: ${{secrets.INSEE_API_CONSUMER_SECRET}}
 
   publish-gpr:
     needs: build
