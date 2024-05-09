@@ -13,8 +13,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - name: Test
-        run: npm test
+      - run: npm test
         env:
           INSEE_API_CONSUMER_KEY: ${{ secrets.INSEE_API_CONSUMER_KEY }}
           INSEE_API_CONSUMER_SECRET: ${{ secrets.INSEE_API_CONSUMER_SECRET }}
