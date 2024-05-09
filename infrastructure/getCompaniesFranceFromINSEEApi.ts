@@ -1,20 +1,4 @@
-type Header = {
-  statut: number;
-};
-
-type Etablissement = {
-  siret: string;
-  uniteLegale: {
-    denominationUniteLegale: string;
-  };
-  adresseEtablissement: {
-    numeroVoieEtablissement: string;
-    typeVoieEtablissement: string;
-    libelleVoieEtablissement: string;
-    codePostalEtablissement: string;
-    libelleCommuneEtablissement: string;
-  };
-};
+import fetch, { Response } from "node-fetch";
 
 export const getCompaniesFranceFromINSEEApi = async (
   query: string,

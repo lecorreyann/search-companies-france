@@ -1,9 +1,4 @@
-type INSEEApiResponse = {
-  access_token: string;
-  scope: string;
-  token_type: string;
-  expires_in: number;
-};
+import fetch, { Response } from "node-fetch";
 
 export const getNewTokenFromINSEEApi = async (): Promise<Response> => {
   const encodedAuthorization = Buffer.from(

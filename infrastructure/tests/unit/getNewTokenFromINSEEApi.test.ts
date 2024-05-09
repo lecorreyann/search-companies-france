@@ -1,4 +1,5 @@
 import getNewTokenFromINSEEApi from "@/infrastructure/getNewTokenFromINSEEApi";
+import { Response } from "node-fetch";
 
 test("getNewTokenFromINSEEApi", async () => {
   const response: Response = await getNewTokenFromINSEEApi();
