@@ -7,7 +7,7 @@ export const getINSEEApiAccessToken = async (): Promise<string> => {
   if (!fs.existsSync(pathConfig)) {
     // call getNewTokenFromINSEEApi
     const response = await getNewTokenFromINSEEApi();
-    const data = await response.json();
+    const data = (await response.json()) as AccessToken;
     const accessToken = data.access_token;
     const config = {
       INSEE_API_KEY: accessToken,

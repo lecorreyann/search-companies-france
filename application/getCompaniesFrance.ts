@@ -3,6 +3,7 @@ import { getINSEEApiAccessToken } from "./getINSEEApiAccessToken";
 import getQuery from "./getQuery";
 import { renewINSEEApiAccessToken } from "./renewINSEEApiAccessToken";
 import ErrorTexts from "@/application/ErrorTexts";
+import { Response } from "node-fetch";
 
 export default async function getCompaniesFrance(query: string): Promise<any> {
   const INSEE_API_KEY = await getINSEEApiAccessToken();
@@ -25,6 +26,6 @@ export default async function getCompaniesFrance(query: string): Promise<any> {
   if (response.status === 404) {
     throw new Error(ErrorTexts.NO_COMPANY_FOUND);
   }
-  const data = await response.json();
+  const data = (await response.json()) as INSEEApiResponse;
   return data.etablissements;
 }

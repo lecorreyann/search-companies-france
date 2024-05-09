@@ -3,7 +3,7 @@ import fs from "fs";
 
 export const renewINSEEApiAccessToken = async (): Promise<void> => {
   const response = await getNewTokenFromINSEEApi();
-  const data = await response.json();
+  const data = (await response.json()) as AccessToken;
   const accessToken = data.access_token;
 
   const pathConfig = `${process.cwd()}/config.json`;
