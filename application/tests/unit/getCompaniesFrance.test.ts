@@ -12,8 +12,8 @@ describe("getCompaniesFrance", () => {
       new Error(ErrorTexts.NO_COMPANY_FOUND)
     );
   }, 10000);
-  it("results.length > 0 when query is Martin", async () => {
-    const result = await getCompaniesFrance("Martin");
+  it("results.length > 0 when query is Planete", async () => {
+    const result = await getCompaniesFrance("Planete");
     expect(result.length).toBeGreaterThan(0);
   }, 10000);
 });
