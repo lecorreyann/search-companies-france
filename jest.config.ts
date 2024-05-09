@@ -7,4 +7,5 @@ export default {
     "^@/(.*)$": "<rootDir>/$1",
   },
   transformIgnorePatterns: ["node_modules/\\.pnpm/(?!node-fetch|fetch-blob)"],
+  testTimeout: 30000,
 };

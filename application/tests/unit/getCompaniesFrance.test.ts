@@ -6,14 +6,14 @@ describe("getCompaniesFrance", () => {
     await expect(getCompaniesFrance("53805889200013")).rejects.toThrow(
       new Error(ErrorTexts.NO_COMPANY_FOUND)
     );
-  }, 10000);
+  });
   it("reject when siret 53805889200018", async () => {
     await expect(getCompaniesFrance("53805889200018")).rejects.toThrow(
       new Error(ErrorTexts.NO_COMPANY_FOUND)
     );
-  }, 10000);
+  });
   it("results.length > 0 when query is Planete", async () => {
     const result = await getCompaniesFrance("Planete");
     expect(result.length).toBeGreaterThan(0);
-  }, 10000);
+  });
 });
