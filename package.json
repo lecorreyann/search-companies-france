@@ -1,5 +1,5 @@
 {
-  "name": "search-companies-france",
+  "name": "@lecorreyann/search-companies-france",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,19 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5"
-  }
+  },
+  "publishConfig": {
+    "yannlc:registry": "https://npm.pkg.github.com"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lecorreyann/search-companies-france.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lecorreyann/search-companies-france/issues"
+  },
+  "homepage": "https://github.com/lecorreyann/search-companies-france#readme"
 }
