@@ -3,7 +3,7 @@
   "author": "Yann Le Corre <yannlc@posteo.net>",
   "license": "GPL-3.0",
   "description": "Search french companies",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
