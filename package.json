@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "prepublish": "rm -rf ./dist && tsc && tsc-alias"
+    "prepublish": "tsc && tsc-alias"
   },
   "author": "Yann Le Corre <yannlc@posteo.net>",
   "license": "GPL-3.0",
