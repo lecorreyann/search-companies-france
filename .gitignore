@@ -134,3 +134,7 @@ config.json
 
 # DS
 .DS_Store
+
+# npm
+.npmrc
+.npmignore
