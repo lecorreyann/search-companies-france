@@ -4,6 +4,10 @@
 
 Search french companies with INSEE Sirene API V3.11
 
+## Install
+
+`npm i @lecorreyann/search-companies-france`
+
 ## Setup
 
 1. Create an account to https://api.insee.fr/catalogue/, login to your account and go to "Mes applications" to create your application and get your "Clef du consommateur" and "Secret du consommateur"... good luck 🍀
@@ -12,6 +16,34 @@ Search french companies with INSEE Sirene API V3.11
 
 - **INSEE_API_CONSUMER_KEY**="Clef du consommateur"
 - **INSEE_API_CONSUMER_SECRET**="Secret du consommateur"
+
+## How to use?
+
+### Request
+
+```typescript
+import getCompaniesFrance, {
+  Company,
+} from "@lecorreyann/search-companies-france";
+
+const query = "SIREN, SIRET or Company name";
+const response: Company[] = await getCompaniesFrance(query);
+```
+
+### Response
+
+`Company[]`
+
+```json
+[
+  {
+    name: string;
+    code: string; // for France = SIRET
+    address: string;
+  }
+]
+
+```
 
 ## Typescript config
 
