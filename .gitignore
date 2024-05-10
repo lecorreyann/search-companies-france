@@ -89,7 +89,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+
 
 # Gatsby files
 .cache/
@@ -138,3 +138,6 @@ config.json
 # npm
 .npmrc
 .npmignore
+
+# eslint
+eslint.config.mjs
