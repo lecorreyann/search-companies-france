@@ -5,9 +5,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc && tsc-alias && shx mv dist/src/* dist/ && shx rm -rf dist/src",
-    "prepublishOnly": "mv src/ ../",
-    "postpublish": "mv ../src ."
+    "build": "tsc && tsc-alias && shx mv dist/src/* dist/ && shx rm -rf dist/src"
   },
   "author": "Yann Le Corre <yannlc@posteo.net>",
   "license": "GPL-3.0",
@@ -28,9 +26,6 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2"
-  },
-  "publishConfig": {
-    "@lecorreyann:registry": "https://npm.pkg.github.com"
   },
   "directories": {
     "test": "tests"
