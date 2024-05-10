@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../esm/domain/Company.js"],
+  "sourcesContent": ["export {};\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

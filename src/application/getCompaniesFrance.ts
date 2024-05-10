@@ -4,8 +4,11 @@ import getQuery from "./getQuery";
 import { renewINSEEApiAccessToken } from "@/application/renewINSEEApiAccessToken";
 import ErrorTexts from "@/application/ErrorTexts";
 import { Response } from "node-fetch";
+import { Company } from "@/domain/Company";
 
-export default async function getCompaniesFrance(query: string): Promise<any> {
+export default async function getCompaniesFrance(
+  query: string
+): Promise<Company[]> {
   const INSEE_API_KEY = await getINSEEApiAccessToken();
 
   const buildQuery = getQuery(query);
