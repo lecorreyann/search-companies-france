@@ -27,5 +27,12 @@ export default async function getCompaniesFrance(query: string): Promise<any> {
     throw new Error(ErrorTexts.NO_COMPANY_FOUND);
   }
   const data = (await response.json()) as INSEEApiResponse;
-  return data.etablissements;
+  const companies = data.etablissements.map((company: Etablissement) => {
+    return {
+      code: company.siret,
+      name: company.uniteLegale.denominationUniteLegale,
+      address: `${company.adresseEtablissement.numeroVoieEtablissement} ${company.adresseEtablissement.typeVoieEtablissement} ${company.adresseEtablissement.libelleVoieEtablissement}, ${company.adresseEtablissement.codePostalEtablissement} ${company.adresseEtablissement.libelleCommuneEtablissement}`,
+    };
+  });
+  return companies;
 }

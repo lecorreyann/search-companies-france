@@ -16,4 +16,10 @@ describe("getCompaniesFrance", () => {
     const result = await getCompaniesFrance("Planete");
     expect(result.length).toBeGreaterThan(0);
   });
+  it("results[0] has code, name and address when query is Planete", async () => {
+    const result = await getCompaniesFrance("Planete");
+    expect(result[0]).toHaveProperty("code");
+    expect(result[0]).toHaveProperty("name");
+    expect(result[0]).toHaveProperty("address");
+  });
 });

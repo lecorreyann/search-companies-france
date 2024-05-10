@@ -1,3 +1,3 @@
-import getCompaniesFrance from "./src/application/getCompaniesFrance";
+import getCompaniesFrance from "@/application/getCompaniesFrance";
 
 export default getCompaniesFrance;

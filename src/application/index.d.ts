@@ -10,7 +10,7 @@ declare interface Etablissement {
   uniteLegale: {
     denominationUniteLegale: string;
   };
-  adresse: {
+  adresseEtablissement: {
     numeroVoieEtablissement: string;
     typeVoieEtablissement: string;
     libelleVoieEtablissement: string;
