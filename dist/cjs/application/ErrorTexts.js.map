@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../esm/application/ErrorTexts.js"],
+  "sourcesContent": ["var ErrorTexts;\n(function (ErrorTexts) {\n    ErrorTexts[\"INVALID_SIREN_SIRET_NUMBER\"] = \"You have provided a number but it is not a SIREN or SIRET number.\";\n    ErrorTexts[\"NO_COMPANY_FOUND\"] = \"No company found.\";\n})(ErrorTexts || (ErrorTexts = {}));\nexport default ErrorTexts;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,IAAI;AAAA,CACH,SAAUA,aAAY;AACnB,EAAAA,YAAW,gCAAgC;AAC3C,EAAAA,YAAW,sBAAsB;AACrC,GAAG,eAAe,aAAa,CAAC,EAAE;AAClC,IAAO,qBAAQ;",
+  "names": ["ErrorTexts"]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../esm/infrastructure/tests/unit/getNewTokenFromINSEEApi.test.js"],
+  "sourcesContent": ["import getNewTokenFromINSEEApi from \"../../../infrastructure/getNewTokenFromINSEEApi.js\";\ntest(\"getNewTokenFromINSEEApi\", async () => {\n    const response = await getNewTokenFromINSEEApi();\n    expect(response.status).toBe(200);\n    const data = await response.json();\n    if (response.status === 200) {\n        expect(data).toHaveProperty(\"access_token\");\n        expect(data).toHaveProperty(\"scope\");\n        expect(data).toHaveProperty(\"token_type\");\n        expect(data).toHaveProperty(\"expires_in\");\n    }\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,qCAAoC;AACpC,KAAK,2BAA2B,YAAY;AACxC,QAAM,WAAW,UAAM,+BAAAA,SAAwB;AAC/C,SAAO,SAAS,MAAM,EAAE,KAAK,GAAG;AAChC,QAAM,OAAO,MAAM,SAAS,KAAK;AACjC,MAAI,SAAS,WAAW,KAAK;AACzB,WAAO,IAAI,EAAE,eAAe,cAAc;AAC1C,WAAO,IAAI,EAAE,eAAe,OAAO;AACnC,WAAO,IAAI,EAAE,eAAe,YAAY;AACxC,WAAO,IAAI,EAAE,eAAe,YAAY;AAAA,EAC5C;AACJ,CAAC;",
+  "names": ["getNewTokenFromINSEEApi"]
+}

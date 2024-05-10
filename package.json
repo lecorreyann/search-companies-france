@@ -1,17 +1,34 @@
 {
   "name": "@lecorreyann/search-companies-france",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "jest",
-    "build": "tsc && tsc-alias"
-  },
   "author": "Yann Le Corre <yannlc@posteo.net>",
   "license": "GPL-3.0",
   "description": "Search french companies",
+  "version": "1.0.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "tsc --watch",
+    "build": "tsc && tsc-alias -p tsconfig.json",
+    "postbuild": "esm2cjs --in dist/esm --out dist/cjs -l error"
+  },
   "devDependencies": {
+    "@alcalzone/esm2cjs": "^1.1.2",
     "@eslint/js": "^9.2.0",
+    "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.12",
     "eslint": "^8.57.0",
     "globals": "^15.1.0",

@@ -8,4 +8,5 @@ export default {
   },
   transformIgnorePatterns: ["node_modules/\\.pnpm/(?!node-fetch|fetch-blob)"],
   testTimeout: 30000,
+  testPathIgnorePatterns: ["<rootDir>/dist/"],
 };

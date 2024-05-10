@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../esm/application/tests/unit/getQuery.test.js"],
+  "sourcesContent": ["import getQuery from \"../../../application/getQuery.js\";\nimport ErrorTexts from \"../../../application/ErrorTexts.js\";\ndescribe(\"getQuery\", () => {\n    it(\"throws an error when the query length is < 9\", () => {\n        expect(() => getQuery(\"12345678\")).toThrow(new Error(ErrorTexts.INVALID_SIREN_SIRET_NUMBER));\n    });\n    it(\"throws an error when the query length is > 9 but < 14\", () => {\n        expect(() => getQuery(\"1234567891\")).toThrow(new Error(ErrorTexts.INVALID_SIREN_SIRET_NUMBER));\n    });\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,sBAAqB;AACrB,wBAAuB;AACvB,SAAS,YAAY,MAAM;AACvB,KAAG,gDAAgD,MAAM;AACrD,WAAO,UAAM,gBAAAA,SAAS,UAAU,CAAC,EAAE,QAAQ,IAAI,MAAM,kBAAAC,QAAW,0BAA0B,CAAC;AAAA,EAC/F,CAAC;AACD,KAAG,yDAAyD,MAAM;AAC9D,WAAO,UAAM,gBAAAD,SAAS,YAAY,CAAC,EAAE,QAAQ,IAAI,MAAM,kBAAAC,QAAW,0BAA0B,CAAC;AAAA,EACjG,CAAC;AACL,CAAC;",
+  "names": ["getQuery", "ErrorTexts"]
+}

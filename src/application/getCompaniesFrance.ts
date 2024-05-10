@@ -1,7 +1,7 @@
 import { getCompaniesFranceFromINSEEApi } from "@/infrastructure/getCompaniesFranceFromINSEEApi";
-import { getINSEEApiAccessToken } from "./getINSEEApiAccessToken";
+import { getINSEEApiAccessToken } from "@/application/getINSEEApiAccessToken";
 import getQuery from "./getQuery";
-import { renewINSEEApiAccessToken } from "./renewINSEEApiAccessToken";
+import { renewINSEEApiAccessToken } from "@/application/renewINSEEApiAccessToken";
 import ErrorTexts from "@/application/ErrorTexts";
 import { Response } from "node-fetch";
 
