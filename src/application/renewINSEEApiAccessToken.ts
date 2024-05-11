@@ -1,7 +1,7 @@
 import getNewTokenFromINSEEApi from "@/infrastructure/getNewTokenFromINSEEApi";
 import fs from "fs";
 
-export const renewINSEEApiAccessToken = async (): Promise<void> => {
+export default async function renewINSEEApiAccessToken(): Promise<void> {
   const response = await getNewTokenFromINSEEApi();
   const data = (await response.json()) as AccessToken;
   const accessToken = data.access_token;
@@ -18,4 +18,4 @@ export const renewINSEEApiAccessToken = async (): Promise<void> => {
     config.INSEE_API_KEY = accessToken;
     fs.writeFileSync(pathConfig, JSON.stringify(config));
   }
-};
+}

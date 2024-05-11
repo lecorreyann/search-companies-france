@@ -1,6 +1,6 @@
 import getNewTokenFromINSEEApi from "../infrastructure/getNewTokenFromINSEEApi.js";
 import fs from "fs";
-export const getINSEEApiAccessToken = async () => {
+export default async function getINSEEApiAccessToken() {
     const pathConfig = `${process.cwd()}/config.json`;
     if (!fs.existsSync(pathConfig)) {
         // call getNewTokenFromINSEEApi
@@ -25,4 +25,4 @@ export const getINSEEApiAccessToken = async () => {
         const accessToken = config.INSEE_API_KEY;
         return accessToken;
     }
-};
+}

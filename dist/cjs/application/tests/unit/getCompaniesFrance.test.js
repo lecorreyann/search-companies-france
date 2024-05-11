@@ -18,13 +18,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_getCompaniesFrance = __toESM(require("../../../application/getCompaniesFrance.js"), 1);
-var import_ErrorTexts = __toESM(require("../../../application/ErrorTexts.js"), 1);
 describe("getCompaniesFrance", () => {
-  it("reject when siret 53805889200013", async () => {
-    await expect((0, import_getCompaniesFrance.default)("53805889200013")).rejects.toThrow(new Error(import_ErrorTexts.default.NO_COMPANY_FOUND));
+  it("resolve [] when siret 53805889200013", async () => {
+    await expect((0, import_getCompaniesFrance.default)("53805889200013")).resolves.toEqual([]);
   });
-  it("reject when siret 53805889200018", async () => {
-    await expect((0, import_getCompaniesFrance.default)("53805889200018")).rejects.toThrow(new Error(import_ErrorTexts.default.NO_COMPANY_FOUND));
+  it("resolve [] when siret 53805889200018", async () => {
+    await expect((0, import_getCompaniesFrance.default)("53805889200018")).resolves.toEqual([]);
   });
   it("results.length > 0 when query is Planete", async () => {
     const result = await (0, import_getCompaniesFrance.default)("Planete");

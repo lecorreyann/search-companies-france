@@ -24,12 +24,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var getINSEEApiAccessToken_exports = {};
 __export(getINSEEApiAccessToken_exports, {
-  getINSEEApiAccessToken: () => getINSEEApiAccessToken
+  default: () => getINSEEApiAccessToken
 });
 module.exports = __toCommonJS(getINSEEApiAccessToken_exports);
 var import_getNewTokenFromINSEEApi = __toESM(require("../infrastructure/getNewTokenFromINSEEApi.js"), 1);
 var import_fs = __toESM(require("fs"), 1);
-const getINSEEApiAccessToken = async () => {
+async function getINSEEApiAccessToken() {
   const pathConfig = `${process.cwd()}/config.json`;
   if (!import_fs.default.existsSync(pathConfig)) {
     const response = await (0, import_getNewTokenFromINSEEApi.default)();
@@ -49,9 +49,7 @@ const getINSEEApiAccessToken = async () => {
     const accessToken = config.INSEE_API_KEY;
     return accessToken;
   }
-};
+}
 // Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  getINSEEApiAccessToken
-});
+0 && (module.exports = {});
 //# sourceMappingURL=getINSEEApiAccessToken.js.map

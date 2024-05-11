@@ -1,1 +1,1 @@
-export declare const renewINSEEApiAccessToken: () => Promise<void>;
+export default function renewINSEEApiAccessToken(): Promise<void>;

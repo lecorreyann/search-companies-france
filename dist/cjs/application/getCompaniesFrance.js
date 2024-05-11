@@ -27,25 +27,25 @@ __export(getCompaniesFrance_exports, {
   default: () => getCompaniesFrance
 });
 module.exports = __toCommonJS(getCompaniesFrance_exports);
-var import_getCompaniesFranceFromINSEEApi = require("../infrastructure/getCompaniesFranceFromINSEEApi.js");
-var import_getINSEEApiAccessToken = require("../application/getINSEEApiAccessToken.js");
+var import_getCompaniesFranceFromINSEEApi = __toESM(require("../infrastructure/getCompaniesFranceFromINSEEApi.js"), 1);
+var import_getINSEEApiAccessToken = __toESM(require("../application/getINSEEApiAccessToken.js"), 1);
 var import_getQuery = __toESM(require("./getQuery.js"), 1);
-var import_renewINSEEApiAccessToken = require("../application/renewINSEEApiAccessToken.js");
-var import_ErrorTexts = __toESM(require("../application/ErrorTexts.js"), 1);
+var import_renewINSEEApiAccessToken = __toESM(require("../application/renewINSEEApiAccessToken.js"), 1);
 async function getCompaniesFrance(query) {
-  const INSEE_API_KEY = await (0, import_getINSEEApiAccessToken.getINSEEApiAccessToken)();
+  const INSEE_API_KEY = await (0, import_getINSEEApiAccessToken.default)();
   const buildQuery = (0, import_getQuery.default)(query);
-  let response = await (0, import_getCompaniesFranceFromINSEEApi.getCompaniesFranceFromINSEEApi)(buildQuery, INSEE_API_KEY);
+  let response = await (0, import_getCompaniesFranceFromINSEEApi.default)(buildQuery, INSEE_API_KEY);
   if (response.status === 401) {
-    await (0, import_renewINSEEApiAccessToken.renewINSEEApiAccessToken)();
-    const INSEE_API_KEY2 = await (0, import_getINSEEApiAccessToken.getINSEEApiAccessToken)();
-    response = await (0, import_getCompaniesFranceFromINSEEApi.getCompaniesFranceFromINSEEApi)(buildQuery, INSEE_API_KEY2);
-  }
-  if (response.status === 404) {
-    throw new Error(import_ErrorTexts.default.NO_COMPANY_FOUND);
+    await (0, import_renewINSEEApiAccessToken.default)();
+    const INSEE_API_KEY2 = await (0, import_getINSEEApiAccessToken.default)();
+    response = await (0, import_getCompaniesFranceFromINSEEApi.default)(buildQuery, INSEE_API_KEY2);
   }
   const data = await response.json();
-  const companies = data.etablissements.map((company) => {
+  let companies = [];
+  if (response.status === 404) {
+    return companies;
+  }
+  companies = data.etablissements.map((company) => {
     return {
       code: company.siret,
       name: company.uniteLegale.denominationUniteLegale,

@@ -1,7 +1,7 @@
-import { getCompaniesFranceFromINSEEApi } from "@/infrastructure/getCompaniesFranceFromINSEEApi";
-import { getINSEEApiAccessToken } from "@/application/getINSEEApiAccessToken";
+import getCompaniesFranceFromINSEEApi from "@/infrastructure/getCompaniesFranceFromINSEEApi";
+import getINSEEApiAccessToken from "@/application/getINSEEApiAccessToken";
 import getQuery from "./getQuery";
-import { renewINSEEApiAccessToken } from "@/application/renewINSEEApiAccessToken";
+import renewINSEEApiAccessToken from "@/application/renewINSEEApiAccessToken";
 import ErrorTexts from "@/application/ErrorTexts";
 import { Response } from "node-fetch";
 import { Company } from "@/domain/Company";
@@ -26,11 +26,16 @@ export default async function getCompaniesFrance(
       INSEE_API_KEY
     );
   }
-  if (response.status === 404) {
-    throw new Error(ErrorTexts.NO_COMPANY_FOUND);
-  }
+
   const data = (await response.json()) as INSEEApiResponse;
-  const companies = data.etablissements.map((company: Etablissement) => {
+
+  let companies: Company[] = [];
+
+  if (response.status === 404) {
+    return companies;
+  }
+
+  companies = data.etablissements.map((company: Etablissement) => {
     return {
       code: company.siret,
       name: company.uniteLegale.denominationUniteLegale,

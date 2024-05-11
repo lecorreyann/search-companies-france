@@ -1,4 +1,4 @@
-import { getINSEEApiAccessToken } from "../../../application/getINSEEApiAccessToken.js";
+import getINSEEApiAccessToken from "../../../application/getINSEEApiAccessToken.js";
 import fs from "fs";
 describe("getINSEEApiAccessToken", () => {
     it("remove config.json and getINSEEApiAccessToken", async () => {

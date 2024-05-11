@@ -1,9 +1,9 @@
 import fetch, { Response } from "node-fetch";
 
-export const getCompaniesFranceFromINSEEApi = async (
+export default async function getCompaniesFranceFromINSEEApi(
   query: string,
   INSEE_API_KEY: string
-): Promise<Response> => {
+): Promise<Response> {
   const response = await fetch(
     `https://api.insee.fr/entreprises/sirene/V3.11/siret?${new URLSearchParams({
       q: query,
@@ -17,6 +17,4 @@ export const getCompaniesFranceFromINSEEApi = async (
     }
   );
   return response;
-};
-
-export default getCompaniesFranceFromINSEEApi;
+}

@@ -1,1 +1,1 @@
-export declare const getINSEEApiAccessToken: () => Promise<string>;
+export default function getINSEEApiAccessToken(): Promise<string>;

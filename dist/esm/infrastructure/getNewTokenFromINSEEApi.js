@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-export const getNewTokenFromINSEEApi = async () => {
+export default async function getNewTokenFromINSEEApi() {
     if (!process.env.INSEE_API_CONSUMER_KEY)
         throw new Error("INSEE_API_CONSUMER_KEY is not defined on .env");
     if (!process.env.INSEE_API_CONSUMER_SECRET)
@@ -14,5 +14,4 @@ export const getNewTokenFromINSEEApi = async () => {
         body: "grant_type=client_credentials",
     });
     return response;
-};
-export default getNewTokenFromINSEEApi;
+}

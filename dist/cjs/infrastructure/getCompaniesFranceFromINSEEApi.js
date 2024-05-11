@@ -24,12 +24,11 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var getCompaniesFranceFromINSEEApi_exports = {};
 __export(getCompaniesFranceFromINSEEApi_exports, {
-  default: () => getCompaniesFranceFromINSEEApi_default,
-  getCompaniesFranceFromINSEEApi: () => getCompaniesFranceFromINSEEApi
+  default: () => getCompaniesFranceFromINSEEApi
 });
 module.exports = __toCommonJS(getCompaniesFranceFromINSEEApi_exports);
 var import_node_fetch = __toESM(require("node-fetch"), 1);
-const getCompaniesFranceFromINSEEApi = async (query, INSEE_API_KEY) => {
+async function getCompaniesFranceFromINSEEApi(query, INSEE_API_KEY) {
   const response = await (0, import_node_fetch.default)(`https://api.insee.fr/entreprises/sirene/V3.11/siret?${new URLSearchParams({
     q: query
   }).toString()}`, {
@@ -40,10 +39,7 @@ const getCompaniesFranceFromINSEEApi = async (query, INSEE_API_KEY) => {
     }
   });
   return response;
-};
-var getCompaniesFranceFromINSEEApi_default = getCompaniesFranceFromINSEEApi;
+}
 // Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  getCompaniesFranceFromINSEEApi
-});
+0 && (module.exports = {});
 //# sourceMappingURL=getCompaniesFranceFromINSEEApi.js.map

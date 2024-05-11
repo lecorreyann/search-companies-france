@@ -1,4 +1,4 @@
-import { getINSEEApiAccessToken } from "@/application/getINSEEApiAccessToken";
+import getINSEEApiAccessToken from "@/application/getINSEEApiAccessToken";
 import fs from "fs";
 
 describe("getINSEEApiAccessToken", () => {

@@ -17,7 +17,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
-var import_getINSEEApiAccessToken = require("../../../application/getINSEEApiAccessToken.js");
+var import_getINSEEApiAccessToken = __toESM(require("../../../application/getINSEEApiAccessToken.js"), 1);
 var import_fs = __toESM(require("fs"), 1);
 describe("getINSEEApiAccessToken", () => {
   it("remove config.json and getINSEEApiAccessToken", async () => {
@@ -26,11 +26,11 @@ describe("getINSEEApiAccessToken", () => {
       import_fs.default.unlinkSync(pathConfig);
     }
     expect(import_fs.default.existsSync(pathConfig)).toBe(false);
-    const accessToken = await (0, import_getINSEEApiAccessToken.getINSEEApiAccessToken)();
+    const accessToken = await (0, import_getINSEEApiAccessToken.default)();
     expect(accessToken).toBeDefined();
   });
   it("getINSEEApiAccessToken", async () => {
-    const accessToken = await (0, import_getINSEEApiAccessToken.getINSEEApiAccessToken)();
+    const accessToken = await (0, import_getINSEEApiAccessToken.default)();
     expect(accessToken).toBeDefined();
   });
 });

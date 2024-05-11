@@ -1,5 +1,5 @@
-import { getINSEEApiAccessToken } from "@/application/getINSEEApiAccessToken";
-import { renewINSEEApiAccessToken } from "@/application/renewINSEEApiAccessToken";
+import getINSEEApiAccessToken from "@/application/getINSEEApiAccessToken";
+import renewINSEEApiAccessToken from "@/application/renewINSEEApiAccessToken";
 
 test("renewINSEEApiAccessToken", async () => {
   await renewINSEEApiAccessToken();

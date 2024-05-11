@@ -24,12 +24,11 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var getNewTokenFromINSEEApi_exports = {};
 __export(getNewTokenFromINSEEApi_exports, {
-  default: () => getNewTokenFromINSEEApi_default,
-  getNewTokenFromINSEEApi: () => getNewTokenFromINSEEApi
+  default: () => getNewTokenFromINSEEApi
 });
 module.exports = __toCommonJS(getNewTokenFromINSEEApi_exports);
 var import_node_fetch = __toESM(require("node-fetch"), 1);
-const getNewTokenFromINSEEApi = async () => {
+async function getNewTokenFromINSEEApi() {
   if (!process.env.INSEE_API_CONSUMER_KEY)
     throw new Error("INSEE_API_CONSUMER_KEY is not defined on .env");
   if (!process.env.INSEE_API_CONSUMER_SECRET)
@@ -44,10 +43,7 @@ const getNewTokenFromINSEEApi = async () => {
     body: "grant_type=client_credentials"
   });
   return response;
-};
-var getNewTokenFromINSEEApi_default = getNewTokenFromINSEEApi;
+}
 // Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  getNewTokenFromINSEEApi
-});
+0 && (module.exports = {});
 //# sourceMappingURL=getNewTokenFromINSEEApi.js.map
