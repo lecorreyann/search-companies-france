@@ -1,5 +1,4 @@
 import getCompaniesFrance from "@/application/getCompaniesFrance";
-import ErrorTexts from "@/application/ErrorTexts";
 
 describe("getCompaniesFrance", () => {
   it("resolve [] when siret 53805889200013", async () => {
