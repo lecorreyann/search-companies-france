@@ -1,8 +1,8 @@
-import getINSEEApiAccessToken from "@/application/getINSEEApiAccessToken";
 import fs from "fs";
+import getINSEEApiAccessToken from "@/application/getINSEEApiAccessToken";
 
 describe("getINSEEApiAccessToken", () => {
-  it("remove config.json and getINSEEApiAccessToken", async () => {
+  it("getINSEEApiAccessToken when config.json does not exist", async () => {
     const pathConfig = `${process.cwd()}/config.json`;
     if (fs.existsSync(pathConfig)) {
       fs.unlinkSync(pathConfig);
@@ -12,7 +12,7 @@ describe("getINSEEApiAccessToken", () => {
     expect(accessToken).toBeDefined();
   });
 
-  it("getINSEEApiAccessToken", async () => {
+  it("getINSEEApiAccessToken when config.json exists", async () => {
     const accessToken: string = await getINSEEApiAccessToken();
     expect(accessToken).toBeDefined();
   });

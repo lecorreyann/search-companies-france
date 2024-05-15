@@ -31,8 +31,33 @@ var import_getCompaniesFranceFromINSEEApi = __toESM(require("../infrastructure/g
 var import_getINSEEApiAccessToken = __toESM(require("../application/getINSEEApiAccessToken.js"), 1);
 var import_getQuery = __toESM(require("./getQuery.js"), 1);
 var import_renewINSEEApiAccessToken = __toESM(require("../application/renewINSEEApiAccessToken.js"), 1);
+function addressFormatter(adresseEtablissement) {
+  let address = "";
+  if (adresseEtablissement.numeroVoieEtablissement) {
+    address += adresseEtablissement.numeroVoieEtablissement + " ";
+  }
+  if (adresseEtablissement.typeVoieEtablissement) {
+    address += adresseEtablissement.typeVoieEtablissement + " ";
+  }
+  if (adresseEtablissement.libelleVoieEtablissement) {
+    address += adresseEtablissement.libelleVoieEtablissement + " ";
+  }
+  if (adresseEtablissement.codePostalEtablissement) {
+    address += adresseEtablissement.codePostalEtablissement + " ";
+  }
+  if (adresseEtablissement.libelleCommuneEtablissement) {
+    address += adresseEtablissement.libelleCommuneEtablissement;
+  }
+  return address;
+}
 async function getCompaniesFrance(query) {
-  const INSEE_API_KEY = await (0, import_getINSEEApiAccessToken.default)();
+  let INSEE_API_KEY;
+  try {
+    INSEE_API_KEY = await (0, import_getINSEEApiAccessToken.default)();
+  } catch (error) {
+    await (0, import_renewINSEEApiAccessToken.default)();
+    INSEE_API_KEY = await (0, import_getINSEEApiAccessToken.default)();
+  }
   const buildQuery = (0, import_getQuery.default)(query);
   let response = await (0, import_getCompaniesFranceFromINSEEApi.default)(buildQuery, INSEE_API_KEY);
   if (response.status === 401) {
@@ -49,7 +74,7 @@ async function getCompaniesFrance(query) {
     return {
       code: company.siret,
       name: company.uniteLegale.denominationUniteLegale,
-      address: `${company.adresseEtablissement.numeroVoieEtablissement} ${company.adresseEtablissement.typeVoieEtablissement} ${company.adresseEtablissement.libelleVoieEtablissement}, ${company.adresseEtablissement.codePostalEtablissement} ${company.adresseEtablissement.libelleCommuneEtablissement}`
+      address: addressFormatter(company.adresseEtablissement)
     };
   });
   return companies;

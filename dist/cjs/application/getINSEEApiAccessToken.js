@@ -27,28 +27,21 @@ __export(getINSEEApiAccessToken_exports, {
   default: () => getINSEEApiAccessToken
 });
 module.exports = __toCommonJS(getINSEEApiAccessToken_exports);
-var import_getNewTokenFromINSEEApi = __toESM(require("../infrastructure/getNewTokenFromINSEEApi.js"), 1);
-var import_fs = __toESM(require("fs"), 1);
+var import_getConfig = __toESM(require("./getConfig.js"), 1);
+var import_renewINSEEApiAccessToken = __toESM(require("./renewINSEEApiAccessToken.js"), 1);
 async function getINSEEApiAccessToken() {
-  const pathConfig = `${process.cwd()}/config.json`;
-  if (!import_fs.default.existsSync(pathConfig)) {
-    const response = await (0, import_getNewTokenFromINSEEApi.default)();
-    const data = await response.json();
-    const accessToken = data.access_token;
-    const config = {
-      INSEE_API_KEY: accessToken
-    };
-    import_fs.default.writeFileSync(pathConfig, JSON.stringify(config));
-    return accessToken;
-  } else if (!import_fs.default.readFileSync(pathConfig, "utf8")) {
-    throw new Error(`${pathConfig} is empty`);
-  } else if (!JSON.parse(import_fs.default.readFileSync(pathConfig, "utf8")).INSEE_API_KEY) {
-    throw new Error(`${pathConfig} is missing INSEE_API_KEY`);
-  } else {
-    const config = JSON.parse(import_fs.default.readFileSync(pathConfig, "utf8"));
-    const accessToken = config.INSEE_API_KEY;
-    return accessToken;
+  let config = (0, import_getConfig.default)();
+  if (!config) {
+    await (0, import_renewINSEEApiAccessToken.default)();
+    config = (0, import_getConfig.default)();
   }
+  if (config) {
+    if (!config.INSEE_API_KEY) {
+      throw new Error("INSEE API Key is not defined");
+    }
+    return config.INSEE_API_KEY;
+  }
+  throw new Error("INSEE API Key is not defined");
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {});

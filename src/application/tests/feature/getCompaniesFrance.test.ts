@@ -14,7 +14,13 @@ describe("getCompaniesFrance", () => {
   it("results[0] has code, name and address when query is Planete", async () => {
     const result = await getCompaniesFrance("Planete");
     expect(result[0]).toHaveProperty("code");
+    expect(result[0].code).toBeDefined();
+    expect(result[0].code).toMatch(/^\d{14}$/);
     expect(result[0]).toHaveProperty("name");
+    expect(result[0].name).toBeDefined();
+    expect(result[0].name).not.toEqual("");
     expect(result[0]).toHaveProperty("address");
+    expect(result[0].address).toBeDefined();
+    expect(result[0].address).not.toEqual("");
   });
 });

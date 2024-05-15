@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../esm/application/getConfig.js"],
+  "sourcesContent": ["import fs from \"fs\";\nimport ErrorTexts from \"./ErrorTexts.js\";\nexport default function getConfig(configName = \"config.json\") {\n    configName = `${process.cwd()}/${configName}`;\n    if (!fs.existsSync(configName))\n        throw new Error(ErrorTexts.NO_CONFIGURATION_FILE_FOUND);\n    return JSON.parse(fs.readFileSync(configName, \"utf8\"));\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,gBAAe;AACf,wBAAuB;AACR,SAAR,UAA2B,aAAa,eAAe;AAC1D,eAAa,GAAG,QAAQ,IAAI,KAAK;AACjC,MAAI,CAAC,UAAAA,QAAG,WAAW,UAAU;AACzB,UAAM,IAAI,MAAM,kBAAAC,QAAW,2BAA2B;AAC1D,SAAO,KAAK,MAAM,UAAAD,QAAG,aAAa,YAAY,MAAM,CAAC;AACzD;",
+  "names": ["fs", "ErrorTexts"]
+}

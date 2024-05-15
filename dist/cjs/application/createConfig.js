@@ -22,27 +22,33 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var renewINSEEApiAccessToken_exports = {};
-__export(renewINSEEApiAccessToken_exports, {
-  default: () => renewINSEEApiAccessToken
+var createConfig_exports = {};
+__export(createConfig_exports, {
+  default: () => createConfig
 });
-module.exports = __toCommonJS(renewINSEEApiAccessToken_exports);
-var import_getNewTokenFromINSEEApi = __toESM(require("../infrastructure/getNewTokenFromINSEEApi.js"), 1);
+module.exports = __toCommonJS(createConfig_exports);
 var import_fs = __toESM(require("fs"), 1);
-var import_createConfig = __toESM(require("./createConfig.js"), 1);
-async function renewINSEEApiAccessToken() {
-  const response = await (0, import_getNewTokenFromINSEEApi.default)();
-  const data = await response.json();
-  const accessToken = data.access_token;
-  const pathConfig = `${process.cwd()}/config.json`;
-  if (!import_fs.default.existsSync(pathConfig)) {
-    (0, import_createConfig.default)("config.json", { INSEE_API_KEY: accessToken });
-  } else {
-    const config = JSON.parse(import_fs.default.readFileSync(pathConfig, "utf8"));
-    config.INSEE_API_KEY = accessToken;
-    import_fs.default.writeFileSync(pathConfig, JSON.stringify(config));
+var import_ErrorTexts = __toESM(require("./ErrorTexts.js"), 1);
+function createConfig(configName = "config.json", payload) {
+  const keys = Object.keys(payload);
+  const pathConfig = `${process.cwd()}/${configName}`;
+  if (keys.length !== 1) {
+    throw new Error(import_ErrorTexts.default.TRY_TO_SET_INVALID_CONFIG);
+  }
+  if (!keys.includes("INSEE_API_KEY"))
+    throw new Error(import_ErrorTexts.default.TRY_TO_SET_INVALID_CONFIG);
+  if (payload.INSEE_API_KEY.trim() === "")
+    throw new Error(import_ErrorTexts.default.INSEE_API_KEY_IS_EMPTY);
+  if (import_fs.default.existsSync(pathConfig))
+    import_fs.default.unlinkSync(pathConfig);
+  import_fs.default.writeFileSync(pathConfig, JSON.stringify(payload));
+  if (!import_fs.default.existsSync(pathConfig))
+    throw new Error(import_ErrorTexts.default.ERROR_CREATING_CONFIG_FILE);
+  const config = JSON.parse(import_fs.default.readFileSync(pathConfig, "utf8"));
+  if (!config.INSEE_API_KEY) {
+    throw new Error(import_ErrorTexts.default.ERROR_CREATING_CONFIG_FILE_INSEE_API_KEY_NOT_SET);
   }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {});
-//# sourceMappingURL=renewINSEEApiAccessToken.js.map
+//# sourceMappingURL=createConfig.js.map

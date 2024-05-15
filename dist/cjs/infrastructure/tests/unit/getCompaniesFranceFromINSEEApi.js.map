@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../esm/infrastructure/tests/unit/getCompaniesFranceFromINSEEApi.js"],
+  "sourcesContent": ["import getINSEEApiAccessToken from \"../../../application/getINSEEApiAccessToken.js\";\nimport getCompaniesFranceFromINSEEApi from \"../../../infrastructure/getCompaniesFranceFromINSEEApi.js\";\ntest(\"getCompaniesFranceFromINSEEApi\", async () => {\n    const INSEEApiAccessToken = await getINSEEApiAccessToken();\n    const response = await getCompaniesFranceFromINSEEApi(\"Plan\u00E8te\", INSEEApiAccessToken);\n    expect(response.status).toBe(200);\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,oCAAmC;AACnC,4CAA2C;AAC3C,KAAK,kCAAkC,YAAY;AAC/C,QAAM,sBAAsB,UAAM,8BAAAA,SAAuB;AACzD,QAAM,WAAW,UAAM,sCAAAC,SAA+B,cAAW,mBAAmB;AACpF,SAAO,SAAS,MAAM,EAAE,KAAK,GAAG;AACpC,CAAC;",
+  "names": ["getINSEEApiAccessToken", "getCompaniesFranceFromINSEEApi"]
+}

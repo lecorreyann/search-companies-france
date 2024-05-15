@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../esm/application/tests/unit/getConfig.test.js"],
+  "sourcesContent": ["import fs from \"fs\";\nimport getConfig from \"../../../application/getConfig.js\";\nimport createConfig from \"../../../application/createConfig.js\";\nimport ErrorTexts from \"../../../application/ErrorTexts.js\";\nconst configName = \"fakeConfig.json\";\nbeforeAll(() => {\n    createConfig(configName, { INSEE_API_KEY: \"test\" });\n});\nafterAll(() => {\n    fs.unlinkSync(`${process.cwd()}/${configName}`);\n});\ndescribe(\"getConfig\", () => {\n    it(\"config has INSEE_API_KEY property\", () => {\n        const config = getConfig(configName);\n        expect(config).toHaveProperty(\"INSEE_API_KEY\");\n    });\n    it(\"get unexisting config\", () => {\n        expect(() => getConfig(\"unexistingConfig.json\")).toThrow(ErrorTexts.NO_CONFIGURATION_FILE_FOUND);\n    });\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,gBAAe;AACf,uBAAsB;AACtB,0BAAyB;AACzB,wBAAuB;AACvB,MAAM,aAAa;AACnB,UAAU,MAAM;AACZ,0BAAAA,SAAa,YAAY,EAAE,eAAe,OAAO,CAAC;AACtD,CAAC;AACD,SAAS,MAAM;AACX,YAAAC,QAAG,WAAW,GAAG,QAAQ,IAAI,KAAK,YAAY;AAClD,CAAC;AACD,SAAS,aAAa,MAAM;AACxB,KAAG,qCAAqC,MAAM;AAC1C,UAAM,aAAS,iBAAAC,SAAU,UAAU;AACnC,WAAO,MAAM,EAAE,eAAe,eAAe;AAAA,EACjD,CAAC;AACD,KAAG,yBAAyB,MAAM;AAC9B,WAAO,UAAM,iBAAAA,SAAU,uBAAuB,CAAC,EAAE,QAAQ,kBAAAC,QAAW,2BAA2B;AAAA,EACnG,CAAC;AACL,CAAC;",
+  "names": ["createConfig", "fs", "getConfig", "ErrorTexts"]
+}

@@ -2,8 +2,34 @@ import getCompaniesFranceFromINSEEApi from "../infrastructure/getCompaniesFrance
 import getINSEEApiAccessToken from "../application/getINSEEApiAccessToken.js";
 import getQuery from "./getQuery.js";
 import renewINSEEApiAccessToken from "../application/renewINSEEApiAccessToken.js";
+function addressFormatter(adresseEtablissement) {
+    let address = "";
+    if (adresseEtablissement.numeroVoieEtablissement) {
+        address += adresseEtablissement.numeroVoieEtablissement + " ";
+    }
+    if (adresseEtablissement.typeVoieEtablissement) {
+        address += adresseEtablissement.typeVoieEtablissement + " ";
+    }
+    if (adresseEtablissement.libelleVoieEtablissement) {
+        address += adresseEtablissement.libelleVoieEtablissement + " ";
+    }
+    if (adresseEtablissement.codePostalEtablissement) {
+        address += adresseEtablissement.codePostalEtablissement + " ";
+    }
+    if (adresseEtablissement.libelleCommuneEtablissement) {
+        address += adresseEtablissement.libelleCommuneEtablissement;
+    }
+    return address;
+}
 export default async function getCompaniesFrance(query) {
-    const INSEE_API_KEY = await getINSEEApiAccessToken();
+    let INSEE_API_KEY;
+    try {
+        INSEE_API_KEY = await getINSEEApiAccessToken();
+    }
+    catch (error) {
+        await renewINSEEApiAccessToken();
+        INSEE_API_KEY = await getINSEEApiAccessToken();
+    }
     const buildQuery = getQuery(query);
     let response = await getCompaniesFranceFromINSEEApi(buildQuery, INSEE_API_KEY);
     if (response.status === 401) {
@@ -20,7 +46,7 @@ export default async function getCompaniesFrance(query) {
         return {
             code: company.siret,
             name: company.uniteLegale.denominationUniteLegale,
-            address: `${company.adresseEtablissement.numeroVoieEtablissement} ${company.adresseEtablissement.typeVoieEtablissement} ${company.adresseEtablissement.libelleVoieEtablissement}, ${company.adresseEtablissement.codePostalEtablissement} ${company.adresseEtablissement.libelleCommuneEtablissement}`,
+            address: addressFormatter(company.adresseEtablissement),
         };
     });
     return companies;

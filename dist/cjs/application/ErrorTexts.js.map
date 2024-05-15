@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../esm/application/ErrorTexts.js"],
-  "sourcesContent": ["var ErrorTexts;\n(function (ErrorTexts) {\n    ErrorTexts[\"INVALID_SIREN_SIRET_NUMBER\"] = \"You have provided a number but it is not a SIREN or SIRET number.\";\n    ErrorTexts[\"NO_COMPANY_FOUND\"] = \"No company found.\";\n})(ErrorTexts || (ErrorTexts = {}));\nexport default ErrorTexts;\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,IAAI;AAAA,CACH,SAAUA,aAAY;AACnB,EAAAA,YAAW,gCAAgC;AAC3C,EAAAA,YAAW,sBAAsB;AACrC,GAAG,eAAe,aAAa,CAAC,EAAE;AAClC,IAAO,qBAAQ;",
+  "sourcesContent": ["var ErrorTexts;\n(function (ErrorTexts) {\n    ErrorTexts[\"INVALID_SIREN_SIRET_NUMBER\"] = \"You have provided a number but it is not a SIREN or SIRET number.\";\n    ErrorTexts[\"NO_COMPANY_FOUND\"] = \"No company found.\";\n    ErrorTexts[\"NO_CONFIGURATION_FILE_FOUND\"] = \"No configuration file found.\";\n    ErrorTexts[\"TRY_TO_SET_INVALID_CONFIG\"] = \"You are trying to set an invalid configuration. Please provide a valid configuration ({INSEE_API_KEY: 'your INSEE Api key'}).\";\n    ErrorTexts[\"INVALID_CONFIGURATION_FILE\"] = \"Invalid configuration file.\";\n    ErrorTexts[\"INSEE_API_KEY_IS_EMPTY\"] = \"INSEE API Key is empty.\";\n    ErrorTexts[\"ERROR_CREATING_CONFIG_FILE\"] = \"Error creating config file.\";\n    ErrorTexts[\"ERROR_CREATING_CONFIG_FILE_INSEE_API_KEY_NOT_SET\"] = \"Error creating config file. INSEE_API_KEY is not set.\";\n})(ErrorTexts || (ErrorTexts = {}));\nexport default ErrorTexts;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,IAAI;AAAA,CACH,SAAUA,aAAY;AACnB,EAAAA,YAAW,gCAAgC;AAC3C,EAAAA,YAAW,sBAAsB;AACjC,EAAAA,YAAW,iCAAiC;AAC5C,EAAAA,YAAW,+BAA+B;AAC1C,EAAAA,YAAW,gCAAgC;AAC3C,EAAAA,YAAW,4BAA4B;AACvC,EAAAA,YAAW,gCAAgC;AAC3C,EAAAA,YAAW,sDAAsD;AACrE,GAAG,eAAe,aAAa,CAAC,EAAE;AAClC,IAAO,qBAAQ;",
   "names": ["ErrorTexts"]
 }

@@ -10,13 +10,7 @@ declare interface Etablissement {
   uniteLegale: {
     denominationUniteLegale: string;
   };
-  adresseEtablissement: {
-    numeroVoieEtablissement: string;
-    typeVoieEtablissement: string;
-    libelleVoieEtablissement: string;
-    codePostalEtablissement: string;
-    libelleCommuneEtablissement: string;
-  };
+  adresseEtablissement: AdressEtablissement;
 }
 
 declare interface INSEEApiResponse {
@@ -28,4 +22,13 @@ declare interface INSEEApiResponse {
     nombre: number;
   };
   etablissements: Etablissement[];
+}
+
+declare interface AdressEtablissement {
+  complementAdresseEtablissement: string | null;
+  numeroVoieEtablissement: string | null;
+  typeVoieEtablissement: string | null;
+  libelleVoieEtablissement: string | null;
+  codePostalEtablissement: string | null;
+  libelleCommuneEtablissement: string | null;
 }
