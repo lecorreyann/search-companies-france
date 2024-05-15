@@ -131,6 +131,7 @@ out
 
 # config
 config.json
+fakeConfig.json
 
 # DS
 .DS_Store
