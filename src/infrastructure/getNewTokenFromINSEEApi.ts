@@ -1,5 +1,3 @@
-import fetch, { Response } from "node-fetch";
-
 export default async function getNewTokenFromINSEEApi(): Promise<Response> {
   if (!process.env.INSEE_API_CONSUMER_KEY)
     throw new Error("INSEE_API_CONSUMER_KEY is not defined on .env");

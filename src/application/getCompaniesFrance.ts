@@ -1,11 +1,16 @@
-import getCompaniesFranceFromINSEEApi from "@/infrastructure/getCompaniesFranceFromINSEEApi";
-import getINSEEApiAccessToken from "@/application/getINSEEApiAccessToken";
+import getCompaniesFranceFromINSEEApi from "../infrastructure/getCompaniesFranceFromINSEEApi";
+import getINSEEApiAccessToken from "./getINSEEApiAccessToken";
 import getQuery from "./getQuery";
-import renewINSEEApiAccessToken from "@/application/renewINSEEApiAccessToken";
-import { Response } from "node-fetch";
-import { Company } from "@/domain/Company";
+import renewINSEEApiAccessToken from "./renewINSEEApiAccessToken";
+import { Company } from "../domain/Company";
 
-function addressFormatter(adresseEtablissement: AdressEtablissement): string {
+function addressFormatter(adresseEtablissement: {
+  numeroVoieEtablissement?: string;
+  typeVoieEtablissement?: string;
+  libelleVoieEtablissement?: string;
+  codePostalEtablissement?: string;
+  libelleCommuneEtablissement?: string;
+}): string {
   let address = "";
   if (adresseEtablissement.numeroVoieEtablissement) {
     address += adresseEtablissement.numeroVoieEtablissement + " ";
@@ -54,7 +59,7 @@ export default async function getCompaniesFrance(
     );
   }
 
-  const data = (await response.json()) as INSEEApiResponse;
+  const data = await response.json();
 
   let companies: Company[] = [];
 
@@ -62,11 +67,33 @@ export default async function getCompaniesFrance(
     return companies;
   }
 
-  companies = data.etablissements.map((company: Etablissement) => {
+  companies = data.etablissements.map((company: unknown) => {
     return {
-      code: company.siret,
-      name: company.uniteLegale.denominationUniteLegale,
-      address: addressFormatter(company.adresseEtablissement),
+      code:
+        typeof company === "object" &&
+        company !== null &&
+        Object.keys(company).includes("siret")
+          ? (company as any).siret
+          : "",
+      name:
+        typeof company === "object" &&
+        company !== null &&
+        Object.keys(company).includes("uniteLegale") &&
+        typeof (company as any).uniteLegale === "object" &&
+        Object((company as any).uniteLegale) !== null &&
+        Object.keys(Object((company as any).uniteLegale)).includes(
+          "denominationUniteLegale"
+        )
+          ? (company as any).uniteLegale.denominationUniteLegale
+          : "",
+      address:
+        typeof company === "object" &&
+        company !== null &&
+        Object.keys(company).includes("uniteLegale") &&
+        typeof (company as any).adresseEtablissement === "object" &&
+        Object((company as any).adresseEtablissement) !== null
+          ? addressFormatter((company as any).adresseEtablissement)
+          : "",
     };
   });
   return companies;

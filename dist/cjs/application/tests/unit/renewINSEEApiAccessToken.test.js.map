@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../esm/application/tests/unit/renewINSEEApiAccessToken.test.js"],
-  "sourcesContent": ["import getINSEEApiAccessToken from \"../../../application/getINSEEApiAccessToken.js\";\nimport renewINSEEApiAccessToken from \"../../../application/renewINSEEApiAccessToken.js\";\ntest(\"renewINSEEApiAccessToken\", async () => {\n    await renewINSEEApiAccessToken();\n    // expect the new access token to be different from the old access token\n    const accessToken = await getINSEEApiAccessToken();\n    expect(accessToken).toBeDefined();\n});\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,oCAAmC;AACnC,sCAAqC;AACrC,KAAK,4BAA4B,YAAY;AACzC,YAAM,gCAAAA,SAAyB;AAE/B,QAAM,cAAc,UAAM,8BAAAC,SAAuB;AACjD,SAAO,WAAW,EAAE,YAAY;AACpC,CAAC;",
-  "names": ["renewINSEEApiAccessToken", "getINSEEApiAccessToken"]
-}

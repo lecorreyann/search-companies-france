@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../esm/application/tests/feature/getINSEEApiAccessToken.js"],
-  "sourcesContent": ["import fs from \"fs\";\nimport getINSEEApiAccessToken from \"../../../application/getINSEEApiAccessToken.js\";\ndescribe(\"getINSEEApiAccessToken\", () => {\n    it(\"getINSEEApiAccessToken when config.json does not exist\", async () => {\n        const pathConfig = `${process.cwd()}/config.json`;\n        if (fs.existsSync(pathConfig)) {\n            fs.unlinkSync(pathConfig);\n        }\n        expect(fs.existsSync(pathConfig)).toBe(false);\n        const accessToken = await getINSEEApiAccessToken();\n        expect(accessToken).toBeDefined();\n    });\n    it(\"getINSEEApiAccessToken when config.json exists\", async () => {\n        const accessToken = await getINSEEApiAccessToken();\n        expect(accessToken).toBeDefined();\n    });\n});\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,gBAAe;AACf,oCAAmC;AACnC,SAAS,0BAA0B,MAAM;AACrC,KAAG,0DAA0D,YAAY;AACrE,UAAM,aAAa,GAAG,QAAQ,IAAI;AAClC,QAAI,UAAAA,QAAG,WAAW,UAAU,GAAG;AAC3B,gBAAAA,QAAG,WAAW,UAAU;AAAA,IAC5B;AACA,WAAO,UAAAA,QAAG,WAAW,UAAU,CAAC,EAAE,KAAK,KAAK;AAC5C,UAAM,cAAc,UAAM,8BAAAC,SAAuB;AACjD,WAAO,WAAW,EAAE,YAAY;AAAA,EACpC,CAAC;AACD,KAAG,kDAAkD,YAAY;AAC7D,UAAM,cAAc,UAAM,8BAAAA,SAAuB;AACjD,WAAO,WAAW,EAAE,YAAY;AAAA,EACpC,CAAC;AACL,CAAC;",
-  "names": ["fs", "getINSEEApiAccessToken"]
-}

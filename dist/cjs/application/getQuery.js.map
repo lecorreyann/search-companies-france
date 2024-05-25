@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../esm/application/getQuery.js"],
-  "sourcesContent": ["import ErrorTexts from \"../application/ErrorTexts.js\";\nexport default function getQuery(query) {\n    let queryType = \"siret\";\n    query = query.trim();\n    if (!isNaN(Number(query))) {\n        if (query.length === 9) {\n            queryType = \"siren\";\n        }\n        else if (query.length === 14) {\n            queryType = \"siret\";\n        }\n        else {\n            throw new Error(ErrorTexts.INVALID_SIREN_SIRET_NUMBER);\n        }\n    }\n    else {\n        queryType = \"denominationUniteLegale\";\n    }\n    query = queryType + \":\" + query + \" AND etatAdministratifUniteLegale:A\"; //  AND etatAdministratifUniteLegale:A => only active companies\n    return query;\n}\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,wBAAuB;AACR,SAAR,SAA0B,OAAO;AACpC,MAAI,YAAY;AAChB,UAAQ,MAAM,KAAK;AACnB,MAAI,CAAC,MAAM,OAAO,KAAK,CAAC,GAAG;AACvB,QAAI,MAAM,WAAW,GAAG;AACpB,kBAAY;AAAA,IAChB,WACS,MAAM,WAAW,IAAI;AAC1B,kBAAY;AAAA,IAChB,OACK;AACD,YAAM,IAAI,MAAM,kBAAAA,QAAW,0BAA0B;AAAA,IACzD;AAAA,EACJ,OACK;AACD,gBAAY;AAAA,EAChB;AACA,UAAQ,YAAY,MAAM,QAAQ;AAClC,SAAO;AACX;",
-  "names": ["ErrorTexts"]
-}

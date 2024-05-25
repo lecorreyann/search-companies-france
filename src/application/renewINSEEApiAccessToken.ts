@@ -1,10 +1,10 @@
-import getNewTokenFromINSEEApi from "@/infrastructure/getNewTokenFromINSEEApi";
+import getNewTokenFromINSEEApi from "../infrastructure/getNewTokenFromINSEEApi";
 import fs from "fs";
 import createConfig from "./createConfig";
 
 export default async function renewINSEEApiAccessToken(): Promise<void> {
   const response = await getNewTokenFromINSEEApi();
-  const data = (await response.json()) as AccessToken;
+  const data = await response.json();
   const accessToken = data.access_token;
 
   const pathConfig = `${process.cwd()}/config.json`;

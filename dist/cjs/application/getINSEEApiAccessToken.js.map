@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../esm/application/getINSEEApiAccessToken.js"],
-  "sourcesContent": ["import getConfig from \"./getConfig.js\";\nimport renewINSEEApiAccessToken from \"./renewINSEEApiAccessToken.js\";\nexport default async function getINSEEApiAccessToken() {\n    let config = getConfig();\n    if (!config) {\n        await renewINSEEApiAccessToken();\n        config = getConfig();\n    }\n    if (config) {\n        if (!config.INSEE_API_KEY) {\n            throw new Error(\"INSEE API Key is not defined\");\n        }\n        return config.INSEE_API_KEY;\n    }\n    throw new Error(\"INSEE API Key is not defined\");\n}\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,uBAAsB;AACtB,sCAAqC;AACrC,eAAO,yBAAgD;AACnD,MAAI,aAAS,iBAAAA,SAAU;AACvB,MAAI,CAAC,QAAQ;AACT,cAAM,gCAAAC,SAAyB;AAC/B,iBAAS,iBAAAD,SAAU;AAAA,EACvB;AACA,MAAI,QAAQ;AACR,QAAI,CAAC,OAAO,eAAe;AACvB,YAAM,IAAI,MAAM,8BAA8B;AAAA,IAClD;AACA,WAAO,OAAO;AAAA,EAClB;AACA,QAAM,IAAI,MAAM,8BAA8B;AAClD;",
-  "names": ["getConfig", "renewINSEEApiAccessToken"]
-}

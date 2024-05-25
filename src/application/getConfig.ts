@@ -1,5 +1,4 @@
 import fs from "fs";
-import ErrorTexts from "./ErrorTexts";
 
 export default function getConfig(
   configName: string = "config.json"
@@ -7,7 +6,7 @@ export default function getConfig(
   configName = `${process.cwd()}/${configName}`;
 
   if (!fs.existsSync(configName))
-    throw new Error(ErrorTexts.NO_CONFIGURATION_FILE_FOUND);
+    throw new Error("No configuration file found");
 
   return JSON.parse(fs.readFileSync(configName, "utf8"));
 }

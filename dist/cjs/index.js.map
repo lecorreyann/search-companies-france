@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../esm/index.js"],
-  "sourcesContent": ["import \"dotenv/config\";\nimport getCompaniesFrance from \"./application/getCompaniesFrance.js\";\nexport default getCompaniesFrance;\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,oBAAO;AACP,gCAA+B;AAC/B,IAAO,cAAQ,0BAAAA;",
-  "names": ["getCompaniesFrance"]
-}
