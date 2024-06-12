@@ -32,7 +32,8 @@ function addressFormatter(adresseEtablissement: {
 }
 
 export default async function getCompaniesFrance(
-  query: string
+  query: string,
+  active?: "A" | "C" // A => only active companies / C => only closed companies
 ): Promise<Company[]> {
   let INSEE_API_KEY: string;
 
@@ -43,7 +44,7 @@ export default async function getCompaniesFrance(
     INSEE_API_KEY = await getINSEEApiAccessToken();
   }
 
-  const buildQuery = getQuery(query);
+  const buildQuery = getQuery(query, active);
 
   let response: Response = await getCompaniesFranceFromINSEEApi(
     buildQuery as string,
@@ -67,7 +68,7 @@ export default async function getCompaniesFrance(
     return companies;
   }
 
-  companies = data.etablissements.map((company: unknown) => {
+  companies = data.etablissements.map((company: unknown): Company => {
     return {
       code:
         typeof company === "object" &&
@@ -94,6 +95,18 @@ export default async function getCompaniesFrance(
         Object((company as any).adresseEtablissement) !== null
           ? addressFormatter((company as any).adresseEtablissement)
           : "",
+      active:
+        typeof company === "object" &&
+        company !== null &&
+        Object.keys(company).includes("uniteLegale") &&
+        typeof (company as any).uniteLegale === "object" &&
+        Object((company as any).uniteLegale) !== null &&
+        Object.keys(Object((company as any).uniteLegale)).includes(
+          "etatAdministratifUniteLegale"
+        ) &&
+        (company as any).uniteLegale.etatAdministratifUniteLegale === "A"
+          ? true
+          : false,
     };
   });
   return companies;

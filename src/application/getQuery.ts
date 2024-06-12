@@ -1,4 +1,7 @@
-export default function getQuery(query: string): string | Error {
+export default function getQuery(
+  query: string,
+  active?: "A" | "C" // A => only active companies / C => only closed companies
+): string | Error {
   let queryType: "siret" | "siren" | "denominationUniteLegale" = "siret";
   query = query.trim();
 
@@ -15,8 +18,11 @@ export default function getQuery(query: string): string | Error {
   if (queryType === "denominationUniteLegale") {
     query = `"${query}"`;
   }
+  query = `${queryType} : ${query}`;
 
-  query = queryType + ":" + query + " AND etatAdministratifUniteLegale:A"; //  AND etatAdministratifUniteLegale:A => only active companies
+  if (active) {
+    query += ` AND etatAdministratifUniteLegale:${active}`;
+  } //  AND etatAdministratifUniteLegale:A => only active companies / C => only closed companies
 
   return query;
 }

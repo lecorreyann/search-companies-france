@@ -4,8 +4,9 @@ describe("getCompaniesFrance", () => {
   it("resolve [] when siret 53805889200013", async () => {
     await expect(getCompaniesFrance("53805889200013")).resolves.toEqual([]);
   });
-  it("resolve [] when siret 53805889200018", async () => {
-    await expect(getCompaniesFrance("53805889200018")).resolves.toEqual([]);
+  it("results.length > 0 when siret 53805889200018", async () => {
+    const result = await getCompaniesFrance("53805889200018");
+    expect(result.length).toBeGreaterThan(0);
   });
   it("results.length > 0 when query is Planete", async () => {
     const result = await getCompaniesFrance("Planete");
