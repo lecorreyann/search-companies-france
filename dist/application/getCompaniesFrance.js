@@ -35,7 +35,8 @@ function addressFormatter(adresseEtablissement) {
     }
     return address;
 }
-function getCompaniesFrance(query) {
+function getCompaniesFrance(query, active // A => only active companies / C => only closed companies
+) {
     return __awaiter(this, void 0, void 0, function* () {
         let INSEE_API_KEY;
         try {
@@ -45,7 +46,7 @@ function getCompaniesFrance(query) {
             yield (0, renewINSEEApiAccessToken_1.default)();
             INSEE_API_KEY = yield (0, getINSEEApiAccessToken_1.default)();
         }
-        const buildQuery = (0, getQuery_1.default)(query);
+        const buildQuery = (0, getQuery_1.default)(query, active);
         let response = yield (0, getCompaniesFranceFromINSEEApi_1.default)(buildQuery, INSEE_API_KEY);
         if (response.status === 401) {
             yield (0, renewINSEEApiAccessToken_1.default)();
@@ -79,6 +80,15 @@ function getCompaniesFrance(query) {
                     Object(company.adresseEtablissement) !== null
                     ? addressFormatter(company.adresseEtablissement)
                     : "",
+                active: typeof company === "object" &&
+                    company !== null &&
+                    Object.keys(company).includes("uniteLegale") &&
+                    typeof company.uniteLegale === "object" &&
+                    Object(company.uniteLegale) !== null &&
+                    Object.keys(Object(company.uniteLegale)).includes("etatAdministratifUniteLegale") &&
+                    company.uniteLegale.etatAdministratifUniteLegale === "A"
+                    ? true
+                    : false,
             };
         });
         return companies;

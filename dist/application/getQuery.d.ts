@@ -1,1 +1,1 @@
-export default function getQuery(query: string): string | Error;
+export default function getQuery(query: string, active?: "A" | "C"): string | Error;
