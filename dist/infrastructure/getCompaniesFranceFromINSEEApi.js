@@ -11,9 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 function getCompaniesFranceFromINSEEApi(query, INSEE_API_KEY) {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch(`https://api.insee.fr/entreprises/sirene/V3.11/siret?${new URLSearchParams({
-            q: query,
-        }).toString()}`, {
+        const response = yield fetch(`https://api.insee.fr/entreprises/sirene/V3.11/siret?q=${query}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

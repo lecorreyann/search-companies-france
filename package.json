@@ -3,7 +3,7 @@
   "author": "Yann Le Corre <yannlc@posteo.net>",
   "license": "GPL-3.0",
   "description": "Search french companies",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",

@@ -33,10 +33,35 @@ function addressFormatter(adresseEtablissement) {
     if (adresseEtablissement.libelleCommuneEtablissement) {
         address += adresseEtablissement.libelleCommuneEtablissement;
     }
+    if (address === "") {
+        if (adresseEtablissement.libellePaysEtrangerEtablissement) {
+            address += adresseEtablissement.libellePaysEtrangerEtablissement;
+        }
+    }
     return address;
 }
-function getCompaniesFrance(query, active // A => only active companies / C => only closed companies
-) {
+function nameFormatter(uniteLegale) {
+    let name = "";
+    if (uniteLegale.denominationUniteLegale) {
+        return uniteLegale
+            .denominationUniteLegale;
+    }
+    // else if prenomUsuelUniteLegale, nomUniteLegale
+    if (uniteLegale.prenomUsuelUniteLegale) {
+        name +=
+            uniteLegale
+                .prenomUsuelUniteLegale + " ";
+    }
+    if (uniteLegale === null || uniteLegale === void 0 ? void 0 : uniteLegale.prenom2UniteLegale) {
+        name +=
+            (uniteLegale === null || uniteLegale === void 0 ? void 0 : uniteLegale.prenom2UniteLegale) + " ";
+    }
+    if (uniteLegale === null || uniteLegale === void 0 ? void 0 : uniteLegale.nomUniteLegale) {
+        name += (uniteLegale === null || uniteLegale === void 0 ? void 0 : uniteLegale.nomUniteLegale) + " ";
+    }
+    return name;
+}
+function getCompaniesFrance(query) {
     return __awaiter(this, void 0, void 0, function* () {
         let INSEE_API_KEY;
         try {
@@ -46,7 +71,7 @@ function getCompaniesFrance(query, active // A => only active companies / C => o
             yield (0, renewINSEEApiAccessToken_1.default)();
             INSEE_API_KEY = yield (0, getINSEEApiAccessToken_1.default)();
         }
-        const buildQuery = (0, getQuery_1.default)(query, active);
+        const buildQuery = (0, getQuery_1.default)(query);
         let response = yield (0, getCompaniesFranceFromINSEEApi_1.default)(buildQuery, INSEE_API_KEY);
         if (response.status === 401) {
             yield (0, renewINSEEApiAccessToken_1.default)();
@@ -59,37 +84,30 @@ function getCompaniesFrance(query, active // A => only active companies / C => o
             return companies;
         }
         companies = data.etablissements.map((company) => {
-            return {
-                code: typeof company === "object" &&
-                    company !== null &&
-                    Object.keys(company).includes("siret")
-                    ? company.siret
-                    : "",
-                name: typeof company === "object" &&
-                    company !== null &&
-                    Object.keys(company).includes("uniteLegale") &&
-                    typeof company.uniteLegale === "object" &&
-                    Object(company.uniteLegale) !== null &&
-                    Object.keys(Object(company.uniteLegale)).includes("denominationUniteLegale")
-                    ? company.uniteLegale.denominationUniteLegale
-                    : "",
-                address: typeof company === "object" &&
-                    company !== null &&
-                    Object.keys(company).includes("uniteLegale") &&
-                    typeof company.adresseEtablissement === "object" &&
-                    Object(company.adresseEtablissement) !== null
-                    ? addressFormatter(company.adresseEtablissement)
-                    : "",
-                active: typeof company === "object" &&
-                    company !== null &&
-                    Object.keys(company).includes("uniteLegale") &&
-                    typeof company.uniteLegale === "object" &&
-                    Object(company.uniteLegale) !== null &&
-                    Object.keys(Object(company.uniteLegale)).includes("etatAdministratifUniteLegale") &&
-                    company.uniteLegale.etatAdministratifUniteLegale === "A"
-                    ? true
-                    : false,
-            };
+            if (typeof company === "object" && company !== null) {
+                return {
+                    code: Object.keys(company).includes("siret")
+                        ? company.siret
+                        : "",
+                    name: Object.keys(company).includes("uniteLegale") &&
+                        typeof company.uniteLegale === "object" &&
+                        Object(company.uniteLegale) !== null
+                        ? nameFormatter(company.uniteLegale)
+                        : "",
+                    address: Object.keys(company).includes("uniteLegale") &&
+                        typeof company.adresseEtablissement === "object" &&
+                        Object(company.adresseEtablissement) !== null
+                        ? addressFormatter(company.adresseEtablissement)
+                        : "",
+                    active: Object.keys(company).includes("uniteLegale") &&
+                        typeof company.uniteLegale === "object" &&
+                        Object(company.uniteLegale) !== null &&
+                        Object.keys(Object(company.uniteLegale)).includes("etatAdministratifUniteLegale") &&
+                        company.uniteLegale.etatAdministratifUniteLegale === "A"
+                        ? true
+                        : false,
+                };
+            }
         });
         return companies;
     });
