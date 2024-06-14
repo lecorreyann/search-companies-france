@@ -1,14 +1,22 @@
 export default function getQuery(
-  query: string,
-  active?: "A" | "C" // A => only active companies / C => only closed companies
+  query: string // A => only active companies / C => only closed companies
 ): string | Error {
   let queryType: "siret" | "siren" | "denominationUniteLegale" = "siret";
   query = query.trim();
 
-  if ((!isNaN(Number(query)) && query.length === 9) || query.length === 14) {
-    if (query.length === 9) {
+  const params = new URLSearchParams(query);
+
+  if (params.get("q") === null) {
+    return new Error("Invalid query");
+  }
+
+  if (
+    (!isNaN(Number(params.get("q"))) && params.get("q")!.length === 9) ||
+    params.get("q")!.length === 14
+  ) {
+    if (queryType.length === 9) {
       queryType = "siren";
-    } else if (query.length === 14) {
+    } else if (params.get("q")!.length === 14) {
       queryType = "siret";
     }
   } else {
@@ -16,13 +24,39 @@ export default function getQuery(
   }
 
   if (queryType === "denominationUniteLegale") {
-    query = `"${query}"`;
+    query = `"${params.get("q")}"`;
   }
-  query = `${queryType} : ${query}`;
+  query = `${queryType}:${query}`;
 
-  if (active) {
-    query += ` AND etatAdministratifUniteLegale:${active}`;
+  let active;
+  if (params.get("active") !== null) {
+    if (["true", "false"].includes(params.get("active")!)) {
+      active = params.get("active") === "true" ? ":A" : ":C";
+    }
+    query += ` AND etatAdministratifUniteLegale${active}`;
   } //  AND etatAdministratifUniteLegale:A => only active companies / C => only closed companies
+
+  let page = 1;
+  if (params.get("page") !== null) {
+    if (!isNaN(Number(params.get("page"))) && Number(params.get("page")) > 0) {
+      page = Number(params.get("page"));
+    }
+  }
+  // page = 1 -> start = 0
+  // page = 2 -> start = 20
+  query += `&debut=${(page - 1) * 20}`;
+
+  let limit = 20;
+  if (params.get("limit") !== null) {
+    if (
+      !isNaN(Number(params.get("limit"))) &&
+      Number(params.get("limit")) > 0
+    ) {
+      limit = Number(params.get("limit"));
+    }
+  }
+
+  query += `&nombre=${limit}`;
 
   return query;
 }

@@ -3,9 +3,7 @@ export default async function getCompaniesFranceFromINSEEApi(
   INSEE_API_KEY: string
 ): Promise<Response> {
   const response = await fetch(
-    `https://api.insee.fr/entreprises/sirene/V3.11/siret?${new URLSearchParams({
-      q: query,
-    }).toString()}`,
+    `https://api.insee.fr/entreprises/sirene/V3.11/siret?q=${query}`,
     {
       method: "GET",
       headers: {

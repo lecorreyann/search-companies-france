@@ -10,6 +10,7 @@ function addressFormatter(adresseEtablissement: {
   libelleVoieEtablissement?: string;
   codePostalEtablissement?: string;
   libelleCommuneEtablissement?: string;
+  libellePaysEtrangerEtablissement?: string;
 }): string {
   let address = "";
   if (adresseEtablissement.numeroVoieEtablissement) {
@@ -28,12 +29,47 @@ function addressFormatter(adresseEtablissement: {
     address += adresseEtablissement.libelleCommuneEtablissement;
   }
 
+  if (address === "") {
+    if (adresseEtablissement.libellePaysEtrangerEtablissement) {
+      address += adresseEtablissement.libellePaysEtrangerEtablissement;
+    }
+  }
+
   return address;
 }
 
+function nameFormatter(uniteLegale: unknown): string {
+  let name = "";
+
+  if (
+    (uniteLegale as { denominationUniteLegale: string }).denominationUniteLegale
+  ) {
+    return (uniteLegale as { denominationUniteLegale: string })
+      .denominationUniteLegale;
+  }
+  // else if prenomUsuelUniteLegale, nomUniteLegale
+  if (
+    (uniteLegale as { prenomUsuelUniteLegale: string }).prenomUsuelUniteLegale
+  ) {
+    name +=
+      (uniteLegale as { prenomUsuelUniteLegale: string })
+        .prenomUsuelUniteLegale + " ";
+  }
+
+  if ((uniteLegale as { prenom2UniteLegale: string })?.prenom2UniteLegale) {
+    name +=
+      (uniteLegale as { prenom2UniteLegale: string })?.prenom2UniteLegale + " ";
+  }
+
+  if ((uniteLegale as { nomUniteLegale: string })?.nomUniteLegale) {
+    name += (uniteLegale as { nomUniteLegale: string })?.nomUniteLegale + " ";
+  }
+
+  return name;
+}
+
 export default async function getCompaniesFrance(
-  query: string,
-  active?: "A" | "C" // A => only active companies / C => only closed companies
+  query: string
 ): Promise<Company[]> {
   let INSEE_API_KEY: string;
 
@@ -44,7 +80,7 @@ export default async function getCompaniesFrance(
     INSEE_API_KEY = await getINSEEApiAccessToken();
   }
 
-  const buildQuery = getQuery(query, active);
+  const buildQuery = getQuery(query);
 
   let response: Response = await getCompaniesFranceFromINSEEApi(
     buildQuery as string,
@@ -68,46 +104,38 @@ export default async function getCompaniesFrance(
     return companies;
   }
 
-  companies = data.etablissements.map((company: unknown): Company => {
-    return {
-      code:
-        typeof company === "object" &&
-        company !== null &&
-        Object.keys(company).includes("siret")
-          ? (company as any).siret
-          : "",
-      name:
-        typeof company === "object" &&
-        company !== null &&
-        Object.keys(company).includes("uniteLegale") &&
-        typeof (company as any).uniteLegale === "object" &&
-        Object((company as any).uniteLegale) !== null &&
-        Object.keys(Object((company as any).uniteLegale)).includes(
-          "denominationUniteLegale"
-        )
-          ? (company as any).uniteLegale.denominationUniteLegale
-          : "",
-      address:
-        typeof company === "object" &&
-        company !== null &&
-        Object.keys(company).includes("uniteLegale") &&
-        typeof (company as any).adresseEtablissement === "object" &&
-        Object((company as any).adresseEtablissement) !== null
-          ? addressFormatter((company as any).adresseEtablissement)
-          : "",
-      active:
-        typeof company === "object" &&
-        company !== null &&
-        Object.keys(company).includes("uniteLegale") &&
-        typeof (company as any).uniteLegale === "object" &&
-        Object((company as any).uniteLegale) !== null &&
-        Object.keys(Object((company as any).uniteLegale)).includes(
-          "etatAdministratifUniteLegale"
-        ) &&
-        (company as any).uniteLegale.etatAdministratifUniteLegale === "A"
-          ? true
-          : false,
-    };
-  });
+  companies = data.etablissements.map(
+    (company: unknown): Company | undefined => {
+      if (typeof company === "object" && company !== null) {
+        return {
+          code: Object.keys(company).includes("siret")
+            ? (company as any).siret
+            : "",
+          name:
+            Object.keys(company).includes("uniteLegale") &&
+            typeof (company as any).uniteLegale === "object" &&
+            Object((company as any).uniteLegale) !== null
+              ? nameFormatter((company as any).uniteLegale)
+              : "",
+          address:
+            Object.keys(company).includes("uniteLegale") &&
+            typeof (company as any).adresseEtablissement === "object" &&
+            Object((company as any).adresseEtablissement) !== null
+              ? addressFormatter((company as any).adresseEtablissement)
+              : "",
+          active:
+            Object.keys(company).includes("uniteLegale") &&
+            typeof (company as any).uniteLegale === "object" &&
+            Object((company as any).uniteLegale) !== null &&
+            Object.keys(Object((company as any).uniteLegale)).includes(
+              "etatAdministratifUniteLegale"
+            ) &&
+            (company as any).uniteLegale.etatAdministratifUniteLegale === "A"
+              ? true
+              : false,
+        };
+      }
+    }
+  );
   return companies;
 }
