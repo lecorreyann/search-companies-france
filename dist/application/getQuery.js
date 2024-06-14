@@ -5,15 +5,15 @@ function getQuery(query // A => only active companies / C => only closed compani
     let queryType = "siret";
     query = query.trim();
     const params = new URLSearchParams(query);
-    if (params.get("q") === null) {
+    let q = params.get("q");
+    if (q === null) {
         return new Error("Invalid query");
     }
-    if ((!isNaN(Number(params.get("q"))) && params.get("q").length === 9) ||
-        params.get("q").length === 14) {
-        if (queryType.length === 9) {
+    if (!isNaN(Number(q)) && (q.length === 9 || q.length === 14)) {
+        if (q.length === 9) {
             queryType = "siren";
         }
-        else if (params.get("q").length === 14) {
+        else if (q.length === 14) {
             queryType = "siret";
         }
     }
@@ -21,9 +21,9 @@ function getQuery(query // A => only active companies / C => only closed compani
         queryType = "denominationUniteLegale";
     }
     if (queryType === "denominationUniteLegale") {
-        query = `"${params.get("q")}"`;
+        q = `"${q}"`;
     }
-    query = `${queryType}:${query}`;
+    query = `${queryType}:${q}`;
     let active;
     if (params.get("active") !== null) {
         if (["true", "false"].includes(params.get("active"))) {

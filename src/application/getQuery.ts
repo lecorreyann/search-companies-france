@@ -5,18 +5,16 @@ export default function getQuery(
   query = query.trim();
 
   const params = new URLSearchParams(query);
+  let q = params.get("q");
 
-  if (params.get("q") === null) {
+  if (q === null) {
     return new Error("Invalid query");
   }
 
-  if (
-    (!isNaN(Number(params.get("q"))) && params.get("q")!.length === 9) ||
-    params.get("q")!.length === 14
-  ) {
-    if (queryType.length === 9) {
+  if (!isNaN(Number(q!)) && (q!.length === 9 || q!.length === 14)) {
+    if (q!.length === 9) {
       queryType = "siren";
-    } else if (params.get("q")!.length === 14) {
+    } else if (q!.length === 14) {
       queryType = "siret";
     }
   } else {
@@ -24,9 +22,9 @@ export default function getQuery(
   }
 
   if (queryType === "denominationUniteLegale") {
-    query = `"${params.get("q")}"`;
+    q = `"${q}"`;
   }
-  query = `${queryType}:${query}`;
+  query = `${queryType}:${q}`;
 
   let active;
   if (params.get("active") !== null) {
