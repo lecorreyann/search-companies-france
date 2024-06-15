@@ -3,4 +3,6 @@ export interface Company {
   name: string;
   address: string;
   active: boolean;
+  naf: string;
+  activity: string;
 }

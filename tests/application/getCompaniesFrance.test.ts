@@ -2,18 +2,18 @@ import getCompaniesFrance from "../../src/application/getCompaniesFrance";
 
 describe("getCompaniesFrance", () => {
   it("resolve [] when siret 53805889200013", async () => {
-    await expect(getCompaniesFrance("53805889200013")).resolves.toEqual([]);
+    await expect(getCompaniesFrance("q=53805889200013")).resolves.toEqual([]);
   });
   it("results.length > 0 when siret 53805889200018", async () => {
-    const result = await getCompaniesFrance("53805889200018");
+    const result = await getCompaniesFrance("q=53805889200018");
     expect(result.length).toBeGreaterThan(0);
   });
   it("results.length > 0 when query is Planete", async () => {
-    const result = await getCompaniesFrance("Planete");
+    const result = await getCompaniesFrance("q=Planete");
     expect(result.length).toBeGreaterThan(0);
   });
   it("results[0] has code, name and address when query is Planete", async () => {
-    const result = await getCompaniesFrance("Planete");
+    const result = await getCompaniesFrance("q=Planete");
     expect(result[0]).toHaveProperty("code");
     expect(result[0].code).toBeDefined();
     expect(result[0].code).toMatch(/^\d{14}$/);

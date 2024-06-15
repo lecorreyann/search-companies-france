@@ -3,6 +3,7 @@ import getINSEEApiAccessToken from "./getINSEEApiAccessToken";
 import getQuery from "./getQuery";
 import renewINSEEApiAccessToken from "./renewINSEEApiAccessToken";
 import { Company } from "../domain/Company";
+import getNafLegend from "./getNafLegend";
 
 function addressFormatter(adresseEtablissement: {
   numeroVoieEtablissement?: string;
@@ -107,6 +108,17 @@ export default async function getCompaniesFrance(
   companies = data.etablissements.map(
     (company: unknown): Company | undefined => {
       if (typeof company === "object" && company !== null) {
+        const naf =
+          Object.keys(company).includes("uniteLegale") &&
+          typeof (company as any).uniteLegale === "object" &&
+          Object((company as any).uniteLegale) !== null &&
+          Object.keys(Object((company as any).uniteLegale)).includes(
+            "activitePrincipaleUniteLegale"
+          )
+            ? (company as any).uniteLegale.activitePrincipaleUniteLegale
+            : "";
+        const nafLegend = naf ? getNafLegend(naf) : "";
+
         return {
           code: Object.keys(company).includes("siret")
             ? (company as any).siret
@@ -133,6 +145,8 @@ export default async function getCompaniesFrance(
             (company as any).uniteLegale.etatAdministratifUniteLegale === "A"
               ? true
               : false,
+          naf: naf,
+          activity: nafLegend ? nafLegend : "",
         };
       }
     }

@@ -16,6 +16,7 @@ const getCompaniesFranceFromINSEEApi_1 = __importDefault(require("../infrastruct
 const getINSEEApiAccessToken_1 = __importDefault(require("./getINSEEApiAccessToken"));
 const getQuery_1 = __importDefault(require("./getQuery"));
 const renewINSEEApiAccessToken_1 = __importDefault(require("./renewINSEEApiAccessToken"));
+const getNafLegend_1 = __importDefault(require("./getNafLegend"));
 function addressFormatter(adresseEtablissement) {
     let address = "";
     if (adresseEtablissement.numeroVoieEtablissement) {
@@ -85,6 +86,13 @@ function getCompaniesFrance(query) {
         }
         companies = data.etablissements.map((company) => {
             if (typeof company === "object" && company !== null) {
+                const naf = Object.keys(company).includes("uniteLegale") &&
+                    typeof company.uniteLegale === "object" &&
+                    Object(company.uniteLegale) !== null &&
+                    Object.keys(Object(company.uniteLegale)).includes("activitePrincipaleUniteLegale")
+                    ? company.uniteLegale.activitePrincipaleUniteLegale
+                    : "";
+                const nafLegend = naf ? (0, getNafLegend_1.default)(naf) : "";
                 return {
                     code: Object.keys(company).includes("siret")
                         ? company.siret
@@ -106,6 +114,8 @@ function getCompaniesFrance(query) {
                         company.uniteLegale.etatAdministratifUniteLegale === "A"
                         ? true
                         : false,
+                    naf: naf,
+                    activity: nafLegend ? nafLegend : "",
                 };
             }
         });
