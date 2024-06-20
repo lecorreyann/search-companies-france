@@ -2,7 +2,7 @@ import getCompaniesFranceFromINSEEApi from "../infrastructure/getCompaniesFrance
 import getINSEEApiAccessToken from "./getINSEEApiAccessToken";
 import getQuery from "./getQuery";
 import renewINSEEApiAccessToken from "./renewINSEEApiAccessToken";
-import { Company } from "../domain/Company";
+import { Company, CompanyPaginate } from "../domain/Company";
 import getNafLegend from "./getNafLegend";
 
 function addressFormatter(adresseEtablissement: {
@@ -71,7 +71,7 @@ function nameFormatter(uniteLegale: unknown): string {
 
 export default async function getCompaniesFrance(
   query: string
-): Promise<Company[]> {
+): Promise<CompanyPaginate> {
   let INSEE_API_KEY: string;
 
   try {
@@ -82,6 +82,10 @@ export default async function getCompaniesFrance(
   }
 
   const buildQuery = getQuery(query);
+
+  const params = new URLSearchParams(query);
+  let q = params.get("q");
+  const perPage = params.get("perPage") ? Number(params.get("perPage")) : 20;
 
   let response: Response = await getCompaniesFranceFromINSEEApi(
     buildQuery as string,
@@ -102,7 +106,14 @@ export default async function getCompaniesFrance(
   let companies: Company[] = [];
 
   if (response.status === 404) {
-    return companies;
+    return {
+      companies: [],
+      total: 0,
+      page: 0,
+      perPage: 0,
+      totalPage: 0,
+      nbElements: 0,
+    };
   }
 
   companies = data.etablissements.map(
@@ -151,5 +162,19 @@ export default async function getCompaniesFrance(
       }
     }
   );
-  return companies;
+
+  // 21
+  // 20
+  // 200
+
+  //
+
+  return {
+    companies,
+    total: data.header.total,
+    page: Math.ceil((data.header.debut + 1) / perPage),
+    perPage: perPage,
+    totalPage: Math.ceil(data.header.total / perPage),
+    nbElements: data.header.nombre,
+  };
 }

@@ -44,17 +44,17 @@ export default function getQuery(
   // page = 2 -> start = 20
   query += `&debut=${(page - 1) * 20}`;
 
-  let limit = 20;
-  if (params.get("limit") !== null) {
+  let perPage = 20;
+  if (params.get("perPage") !== null) {
     if (
-      !isNaN(Number(params.get("limit"))) &&
-      Number(params.get("limit")) > 0
+      !isNaN(Number(params.get("perPage"))) &&
+      Number(params.get("perPage")) > 0
     ) {
-      limit = Number(params.get("limit"));
+      perPage = Number(params.get("perPage"));
     }
   }
 
-  query += `&nombre=${limit}`;
+  query += `&nombre=${perPage}`;
 
   return query;
 }

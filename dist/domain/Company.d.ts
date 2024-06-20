@@ -6,3 +6,11 @@ export interface Company {
     naf: string;
     activity: string;
 }
+export interface CompanyPaginate {
+    companies: Company[];
+    total: number;
+    page: number;
+    perPage: number;
+    totalPage: number;
+    nbElements: number;
+}

@@ -1,6 +1,6 @@
 import "dotenv/config";
 import getCompaniesFrance from "./application/getCompaniesFrance";
-import { Company } from "./domain/Company";
+import { CompanyPaginate } from "./domain/Company";
 
 export default getCompaniesFrance;
-export { Company };
+export { CompanyPaginate };

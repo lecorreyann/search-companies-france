@@ -40,14 +40,14 @@ function getQuery(query // A => only active companies / C => only closed compani
     // page = 1 -> start = 0
     // page = 2 -> start = 20
     query += `&debut=${(page - 1) * 20}`;
-    let limit = 20;
-    if (params.get("limit") !== null) {
-        if (!isNaN(Number(params.get("limit"))) &&
-            Number(params.get("limit")) > 0) {
-            limit = Number(params.get("limit"));
+    let perPage = 20;
+    if (params.get("perPage") !== null) {
+        if (!isNaN(Number(params.get("perPage"))) &&
+            Number(params.get("perPage")) > 0) {
+            perPage = Number(params.get("perPage"));
         }
     }
-    query += `&nombre=${limit}`;
+    query += `&nombre=${perPage}`;
     return query;
 }
 exports.default = getQuery;

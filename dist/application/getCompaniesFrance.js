@@ -73,6 +73,9 @@ function getCompaniesFrance(query) {
             INSEE_API_KEY = yield (0, getINSEEApiAccessToken_1.default)();
         }
         const buildQuery = (0, getQuery_1.default)(query);
+        const params = new URLSearchParams(query);
+        let q = params.get("q");
+        const perPage = params.get("perPage") ? Number(params.get("perPage")) : 20;
         let response = yield (0, getCompaniesFranceFromINSEEApi_1.default)(buildQuery, INSEE_API_KEY);
         if (response.status === 401) {
             yield (0, renewINSEEApiAccessToken_1.default)();
@@ -82,7 +85,14 @@ function getCompaniesFrance(query) {
         const data = yield response.json();
         let companies = [];
         if (response.status === 404) {
-            return companies;
+            return {
+                companies: [],
+                total: 0,
+                page: 0,
+                perPage: 0,
+                totalPage: 0,
+                nbElements: 0,
+            };
         }
         companies = data.etablissements.map((company) => {
             if (typeof company === "object" && company !== null) {
@@ -119,7 +129,18 @@ function getCompaniesFrance(query) {
                 };
             }
         });
-        return companies;
+        // 21
+        // 20
+        // 200
+        //
+        return {
+            companies,
+            total: data.header.total,
+            page: Math.ceil((data.header.debut + 1) / perPage),
+            perPage: perPage,
+            totalPage: Math.ceil(data.header.total / perPage),
+            nbElements: data.header.nombre,
+        };
     });
 }
 exports.default = getCompaniesFrance;
