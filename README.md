@@ -23,24 +23,32 @@ Search french companies with INSEE Sirene API V3.11
 
 ```typescript
 import getCompaniesFrance, {
-  Company,
+  CompanyPaginate,
 } from "@lecorreyann/search-companies-france";
 
 const query = "SIREN, SIRET or Company name";
-const response: Company[] = await getCompaniesFrance(query);
+const response: CompanyPaginate = await getCompaniesFrance(query);
 ```
 
 ### Response
 
-`Company[]`
+`CompanyPaginate`
 
 ```json
 [
-  {
+  companies: [{
     name: string;
     code: string; // for France = SIRET
     address: string;
-  }
+    active: boolean;
+    naf: string;
+    activity: string;
+  }],
+  total: number;
+  page: number;
+  perPage: number;
+  totalPage: number;
+  nbElements: number;
 ]
 
 ```
